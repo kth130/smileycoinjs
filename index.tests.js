@@ -1,10 +1,10 @@
-const index = require('./index');
+const smly = require('./index');
 
-// todo (torfi): very naive tests, quick implementation to be able to make calls to the api (in index.js)
+// todo (torfi): very naive tests, quick implementation to be able to make calls to the api (in smly.js)
 // later choose a framework and rewrite tests
 
 function getBlockchainInfoTest() {
-    index.getBlockchainInfo()
+    smly.getBlockchainInfo()
     .then((result) => {
         let info = JSON.parse(result);
         if (info.result.chain === 'main') console.log('getBlockchainInfoTest passed')
@@ -16,7 +16,7 @@ function getBlockchainInfoTest() {
 }
 
 function sendTest() {
-    index.send('BSxg8zTJrdi36pLkVeQfrqagBB2oyAyPXe', 11)
+    smly.send('BSxg8zTJrdi36pLkVeQfrqagBB2oyAyPXe', 11)
     .then((result) => {
         let info = JSON.parse(result);
         if (!info.error) console.log('sendTest passed, tdix: ' + info.result)
@@ -28,7 +28,7 @@ function sendTest() {
 }
 
 function getTransactionTest() {
-    index.getTransaction('3fc062b7ba6d750246562153da3c32ce24afae633153728ec72d0cd58ad70078')
+    smly.getTransaction('e299717de8f718961bf2dd3c286fac798b0166fe20dddf282cf42044875b2148')
     .then((result) => {
         let info = JSON.parse(result);
         if (info.result.txid) console.log('getTransactionTest passed, tdix: ' + info.result.txid)
@@ -39,6 +39,58 @@ function getTransactionTest() {
     });
 }
 
+function listUnspentTest() {
+    smly.listUnspent()
+    .then((result) => {
+        let info = JSON.parse(result);
+        if (!info.error) console.log('listUnspentTest passed');
+        else console.log('listUnspentTest failed - ' + info);
+    })
+    .catch((err) => {
+        console.log('listUnspentTest failed - error: ' + err);
+    });
+}
+
+function getWalletInfoTest() {
+    smly.getWalletInfo()
+    .then((result) => {
+        let info = JSON.parse(result);
+        if (!info.error) console.log('getWalletInfo passed');
+        else console.log('getWalletInfo failed - ' + info);
+    })
+    .catch((err) => {
+        console.log('getWalletInfo failed - error: ' + err);
+    });
+}
+
+function listAccountsTest() {
+    smly.listAccounts()
+    .then((result) => {
+        let info = JSON.parse(result);
+        if (!info.error) console.log('listAccounts passed');
+        else console.log('listAccounts failed - ' + info);
+    })
+    .catch((err) => {
+        console.log('listAccounts failed - error: ' + err);
+    });
+}
+
+function getInfoTest() {
+    smly.getInfo()
+    .then((result) => {
+        let info = JSON.parse(result);
+        if (!info.error) console.log('getInfo passed');
+        else console.log('listTransactions failed - ' + info);
+    })
+    .catch((err) => {
+        console.log('getInfo failed - error: ' + err);
+    });
+}
+
 getBlockchainInfoTest();
-sendTest();
+//sendTest();
 getTransactionTest();
+listAccountsTest();
+listUnspentTest();
+getInfoTest();
+getWalletInfoTest();

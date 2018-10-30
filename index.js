@@ -17,5 +17,9 @@ function getTransaction(txid) {
 module.exports = {
     getBlockchainInfo,
     send,
-    getTransaction
+    getTransaction,
+    listUnspent: transactionApi.listUnspent,
+    listAccounts: transactionApi.listAccounts,
+    getWalletInfo: transactionApi.getWalletInfo,
+    getInfo: transactionApi.getInfo,
 }
