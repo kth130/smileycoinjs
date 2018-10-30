@@ -1,6 +1,8 @@
 const request = require('request');
+
 const blockchainApi = require('./api/blockchainApi');
 const transactionApi = require('./api/transactionApi');
+const walletApi = require('./api/walletApi');
 
 function getBlockchainInfo() {
     return blockchainApi.getBlockchainInfo()
@@ -18,8 +20,10 @@ module.exports = {
     getBlockchainInfo,
     send,
     getTransaction,
-    listUnspent: transactionApi.listUnspent,
-    listAccounts: transactionApi.listAccounts,
-    getWalletInfo: transactionApi.getWalletInfo,
-    getInfo: transactionApi.getInfo,
+    listUnspent: walletApi.listUnspent,
+    listAccounts: walletApi.listAccounts,
+    getWalletInfo: walletApi.getWalletInfo,
+    getInfo: blockchainApi.getInfo,
+    getAccount: walletApi.getAccount,
+    getAccountAddress: walletApi.getAccountAddress
 }

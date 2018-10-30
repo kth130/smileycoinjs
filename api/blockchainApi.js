@@ -1,10 +1,12 @@
 const request = require('request');
+const { makeRequest } = require('../utils');
 
 // todo (torfi): put these into config file
-const url = 'http://127.0.01:19332'; 
+const url = 'http://127.0.0.1:9332'; 
 const username = 'username'; 
 const password = 'password';
 
+getInfo = () => makeRequest("getinfo");
 
 function getBlockchainInfo() {
     return new Promise((resolve, reject) => {
@@ -38,4 +40,5 @@ function createRequestHeaders(username, password) {
 
 module.exports = {
     getBlockchainInfo,
+    getInfo
 }

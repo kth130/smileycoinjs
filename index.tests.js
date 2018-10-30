@@ -87,10 +87,36 @@ function getInfoTest() {
     });
 }
 
+function getAccountTest(){
+    smly.getAccount('')
+    .then((result) => {
+        let info = JSON.parse(result);
+        if(!info.error) console.log('getAccount passed - Account: ' + info.result);
+        else console.log('getAccount failed - ' + result);        
+    })
+    .catch((err) => {
+        console.log('getAccount failed - error: ' + err)
+    });
+}
+
+function getAccountAddressTest(){
+    smly.getAccountAddress('')
+    .then((result) => {
+        let info = JSON.parse(result);
+        if(!info.error) console.log('getAccountAddress passed - Account: ' + info.result);
+        else console.log('getAccountAddress failed - ' + result);        
+    })
+    .catch((err) => {
+        console.log('getAccountAddress failed - error: ' + err)
+    });
+}
+
 getBlockchainInfoTest();
-//sendTest();
+sendTest();
 getTransactionTest();
 listAccountsTest();
 listUnspentTest();
 getInfoTest();
 getWalletInfoTest();
+getAccountTest();
+getAccountAddressTest();

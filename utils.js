@@ -5,7 +5,7 @@ const url = 'http://127.0.0.1:9332';
 const username = 'username'; 
 const password = 'password';
 
-function send(address, satAmount) {
+function makeRequest(method, params = []){
     return new Promise((resolve, reject) => {
         request.post(url, 
             { 
@@ -14,11 +14,8 @@ function send(address, satAmount) {
                     {
                         "jsonrpc":2.0,
                         "id":1,
-                        "method":"sendtoaddress",
-                        "params":[
-                            address, 
-                            satAmount
-                        ]
+                        "method":method,
+                        "params":params
                     }
                 )
             }, (err, res, body) => {
@@ -26,30 +23,7 @@ function send(address, satAmount) {
                 if(res.statusCode != 200) reject('invalid status code: ' + res.statusCode + ' - ' + body);
                 resolve(body);
         });
-    })
-}
-
-function getTransaction(txid) {
-    return new Promise((resolve, reject) => {
-        request.post(url, 
-            { 
-                headers: createRequestHeaders(username, password), 
-                body: JSON.stringify(
-                    {
-                        "jsonrpc":2.0,
-                        "id":1,
-                        "method":"gettransaction",
-                        "params":[
-                            txid
-                        ]
-                    }
-                )
-            }, (err, res, body) => {
-                if(err) reject(err)
-                if(res.statusCode != 200) reject('invalid status code: ' + res.statusCode + ' - ' + body);
-                resolve(body);
-        });
-    })
+    });
 }
 
 function createRequestHeaders(username, password) {
@@ -62,6 +36,6 @@ function createRequestHeaders(username, password) {
 }
 
 module.exports = {
-    send,
-    getTransaction,
+    makeRequest,
+    createRequestHeaders
 }
