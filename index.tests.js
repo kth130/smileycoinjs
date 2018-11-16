@@ -1,5 +1,6 @@
-const smly = require('./index');
+const { Client } = require('./index');
 
+const smly = new Client({username: '', password: '' });
 // todo (torfi): very naive tests, quick implementation to be able to make calls to the api (in smly.js)
 // later choose a framework and rewrite tests
 
@@ -88,7 +89,7 @@ function getInfoTest() {
 }
 
 function getAccountTest(){
-    smly.getAccount('')
+    smly.getAccount('BF65fJ11E5tnrgYZYgxXsKfsJjzP3YYwzE')
     .then((result) => {
         let info = JSON.parse(result);
         if(!info.error) console.log('getAccount passed - Account: ' + info.result);
@@ -112,8 +113,8 @@ function getAccountAddressTest(){
 }
 
 getBlockchainInfoTest();
-sendTest();
-getTransactionTest();
+//sendTest();
+//getTransactionTest();
 listAccountsTest();
 listUnspentTest();
 getInfoTest();

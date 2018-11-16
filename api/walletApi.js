@@ -1,15 +1,31 @@
 const { makeRequest } = require('../utils');
 
-getWalletInfo = () => makeRequest("getwalletinfo");
+getWalletInfo = (network) => {
+   return makeRequest(network, "getwalletinfo");
+}
+getAccount = (network, address) => {
+    return makeRequest(network, "getaccount", [ address ]);
+};
 
-getAccount = (address) => makeRequest("getaccount", [ address ]);
-getAccountAddress = (account) => makeRequest("getaccountaddress", [ account ]);
+getAccountAddress = (network, account) => {
+    return makeRequest(network, "getaccountaddress", [ account ]);
+};
 
-listUnspent = (min = 1 , max = 999999) => makeRequest("listunspent", [ min, max ]);
-listAccounts = (minconf = 1) => makeRequest("listaccounts", [ minconf ]);
+listUnspent = (network, min = 1 , max = 999999) => {
+    return makeRequest(network, "listunspent", [ min, max ]);
+};
 
-dumpPrivKey = (address) => makeRequest("dumpPrivKey", [address]);
-dumpWallet = (filename) => makeRequest("dumpwallet", [filename]);
+listAccounts = (network, minconf = 1) => {
+    return makeRequest(network, "listaccounts", [ minconf ]);
+};
+
+dumpPrivKey = (network, address) => {
+    return makeRequest(network, "dumpPrivKey", [address]);
+};
+
+dumpWallet = (network, filename) => {
+    return makeRequest(network, "dumpwallet", [filename]);
+};
 
 module.exports = {
     getAccount,

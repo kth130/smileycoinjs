@@ -1,11 +1,12 @@
 const request = require('request');
 
 // todo (torfi): put these into config file
-const url = 'http://127.0.0.1:9332'; 
-const username = 'username'; 
-const password = 'password';
+// const url = 'http://127.0.0.1:9332'; 
+// const username = 'username'; 
+// const password = 'password';
 
-function makeRequest(method, params = []){
+function makeRequest(network, method, params = []){
+    const { username, password, url } = network;
     return new Promise((resolve, reject) => {
         request.post(url, 
             { 

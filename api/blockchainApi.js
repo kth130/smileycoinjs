@@ -6,7 +6,7 @@ const url = 'http://127.0.0.1:9332';
 const username = 'username'; 
 const password = 'password';
 
-getInfo = () => makeRequest("getinfo");
+getInfo = (network) => makeRequest(network, "getinfo");
 
 function getBlockchainInfo() {
     return new Promise((resolve, reject) => {
