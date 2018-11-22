@@ -15,8 +15,8 @@ function makeRequest(network, method, params = []){
                     {
                         "jsonrpc":2.0,
                         "id":1,
-                        "method":method,
-                        "params":params
+                        "method": method,
+                        "params": params.filter((el => el != null))
                     }
                 )
             }, (err, res, body) => {

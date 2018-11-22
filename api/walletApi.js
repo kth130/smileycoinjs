@@ -1,7 +1,7 @@
 const { makeRequest } = require('../utils');
 
 dumpPrivKey = (network, address) => {
-    return makeRequest(network, "dumpPrivKey", [address]);
+    return makeRequest(network, "dumpprivkey", [address]);
 };
 
 dumpWallet = (network, filename) => {
@@ -16,7 +16,27 @@ getAccountAddress = (network, account) => {
     return makeRequest(network, "getaccountaddress", [ account ]);
 };
 
-getBalance = (network, account = "", minconf = 1) => {
+getAddressesByAccount = (network, account) => {
+    return makeRequest(network,"getaddressesbyaccount", [ account ]);
+};
+
+getReceivedByAccount = (network, account, minconf) => {
+    return makeRequest(network, "getreceivedbyaccount", [ account, minconf ]);
+}
+
+listReceivedByAccount = (network, minconf = 1, include_empty = false) => {
+    return makeRequest(network, "listreceivedbyaccount", [ minconf, include_empty ]);
+}
+
+getReceivedByAddress = (network, address, minconf) => {
+    return makeRequest(network, "getreceivedbyaddress", [ address, minconf ]);
+}
+
+listReceivedByAddress = (network, minconf = 1, include_empty = false) => {
+    return makeRequest(network, "listreceivedbyaddress", [ minconf, include_empty ]);
+}
+
+getBalance = (network, account, minconf) => {
     return makeRequest(network, "getbalance", [ account, minconf ]);
 };
 
@@ -28,11 +48,11 @@ getWalletInfo = (network) => {
     return makeRequest(network, "getwalletinfo");
 };
 
-listUnspent = (network, min = 1 , max = 999999) => {
+listUnspent = (network, min, max) => {
     return makeRequest(network, "listunspent", [ min, max ]);
 };
 
-listAccounts = (network, minconf = 1) => {
+listAccounts = (network, minconf) => {
     return makeRequest(network, "listaccounts", [ minconf ]);
 };
 
@@ -53,6 +73,11 @@ module.exports = {
     getBalance,
     getUnconfirmedBalance,
     getWalletInfo,
+    getAddressesByAccount,
+    getReceivedByAccount,
+    getReceivedByAddress,
+    listReceivedByAccount,
+    listReceivedByAddress,
     listAccounts,
     listUnspent,
     dumpPrivKey,

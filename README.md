@@ -2,7 +2,7 @@
 
 ## How to use 
 
-First of all you have to have access to a running smileycoin node. Information on how to build Smileycoin to build on your machine can be found [here](https://github.com/tutor-web/smileyCoin/tree/master/doc). You will have to run `smileycoind.exe`, or figure out how to run your node on cloud services.
+First of all you have to have access to a running smileycoin node. Information on how to build Smileycoin on your machine can be found [here](https://github.com/tutor-web/smileyCoin/tree/master/doc). You will have to run `smileycoind.exe`, or figure out how to run your node on cloud services.
 
 ```js
 const { Client } = require('smileycoinjs');
@@ -35,11 +35,16 @@ ping
 dumpprivkey "smileycoinaddress"
 dumpwallet "filename"
 getaccount "smileycoinaddress"
+getaddressesbyaccount "account"
 getaccountaddress "account"
 getbalance ( "account" minconf )
 getunconfirmedbalance
 getwalletinfo
 getnewaddress ( "account" )
+getreceivedbyaccount "account" ( minconf )
+getreceivedbyaddress "smileycoinaddress" ( minconf )
+listreceivedbyaccount ( minconf includeempty )
+listreceivedbyaddress ( minconf includeempty )
 listaccounts ( minconf )
 listunspent ( minconf maxconf  ["address",...] )
 settxfee amount
@@ -63,7 +68,6 @@ decoderawtransaction "hexstring"
 decodescript "hex"
 encryptwallet "passphrase"
 getaddednodeinfo dns ( "node" )
-getaddressesbyaccount "account"
 getblocktemplate ( "jsonrequestobject" )
 getgenerate
 gethashespersec
@@ -71,8 +75,6 @@ getnettotals
 getpeerinfo
 getrawchangeaddress
 getrawmempool ( verbose )
-getreceivedbyaccount "account" ( minconf )
-getreceivedbyaddress "smileycoinaddress" ( minconf )
 getrichaddresses
 gettxout "txid" n ( includemempool )
 gettxoutsetinfo
@@ -83,8 +85,7 @@ importwallet "filename"
 keypoolrefill ( newsize )
 listaddressgroupings
 listlockunspent
-listreceivedbyaccount ( minconf includeempty )
-listreceivedbyaddress ( minconf includeempty )
+
 listsinceblock ( "blockhash" target-confirmations )
 lockunspent unlock [{"txid":"txid","vout":n},...]
 move "fromaccount" "toaccount" amount ( minconf "comment" )

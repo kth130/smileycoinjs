@@ -13,7 +13,7 @@ function Client(network, maxFee = 1){
  * Blockchain API starts
  */
 Client.prototype.getBlockchainInfo = function () {
-    return blockchainApi.getBlockchainInfo();
+    return blockchainApi.getBlockchainInfo(this.network);
 }
 
 Client.prototype.getInfo = function() {
@@ -71,14 +71,33 @@ Client.prototype.verifyMessage = function(address, signature, message) {
  */
 Client.prototype.getAccount = function(address) {
     return walletApi.getAccount(this.network, address);
-}
+};
 
 Client.prototype.getAccountAddress = function(account) {
     return walletApi.getAccountAddress(this.network, account);
-}
+};
+
+Client.prototype.getAddressesByAccount = function(account) {
+    return walletApi.getAddressesByAccount(this.network,account);
+};
 
 Client.prototype.getNewAddress = function(account) {
     return walletApi.getNewAddress(this.network, account);
+};
+
+Client.prototype.getReceivedByAccount = function(account, minconf) {
+    return walletApi.getReceivedByAccount(this.network, account, minconf);
+};
+
+Client.prototype.listReceivedByAccount = function(minconf, include_empty) {
+    return walletApi.getReceivedByAccount(this.network, minconf, include_empty);
+};
+
+Client.prototype.getReceivedByAddress = function(address, minconf) {
+    return walletApi.getReceivedByAddress(this.network, address, minconf);
+};
+Client.prototype.listReceivedByAddress = function(minconf, include_empty) {
+    return walletApi.getReceivedByAddress(this.network, minconf, include_empty);
 };
 
 Client.prototype.getBalance = function(account, minconf) {
