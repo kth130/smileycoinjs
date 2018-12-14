@@ -29,6 +29,10 @@ getBlockHash = (network, index) => {
     return makeRequest(network, "getblockhash", [ index ]);
 };
 
+validateAddress = (network, address) => {
+    return makeRequest(network, "validateaddress", [address]);
+}
+
 
 
 
@@ -40,4 +44,5 @@ module.exports = {
     getBlock, 
     getBlockCount, 
     getBlockHash,
+    validateAddress
 }

@@ -73,9 +73,15 @@ getrawtransaction "txid" ( verbose )
 
 sendtoaddress "address" amount
 
+sendfrom "fromaccount" "tosmileycoinaddress" amount ( minconf "comment" "comment-to" )
+
+sendmany "fromaccount" {"address":amount,...} ( minconf "comment" )
+
 listtransactions ( "account" count from )
 
 verifymessage "smileycoinaddress" "signature" "message"
+
+validateaddress "smileycoinaddress"
 
 
 
@@ -98,6 +104,7 @@ decodescript "hex"
 encryptwallet "passphrase"
 
 getaddednodeinfo dns ( "node" )
+
 getblocktemplate ( "jsonrequestobject" )
 
 getgenerate
@@ -111,6 +118,7 @@ getpeerinfo
 getrawchangeaddress
 
 getrawmempool ( verbose )
+
 getrichaddresses
 
 gettxout "txid" n ( includemempool )
@@ -137,10 +145,6 @@ lockunspent unlock [{"txid":"txid","vout":n},...]
 
 move "fromaccount" "toaccount" amount ( minconf "comment" )
 
-sendfrom "fromaccount" "tosmileycoinaddress" amount ( minconf "comment" "comment-to" )
-
-sendmany "fromaccount" {"address":amount,...} ( minconf "comment" )
-
 sendrawtransaction "hexstring" ( allowhighfees )
 
 setaccount "smileycoinaddress" "account"
@@ -156,6 +160,5 @@ stop
 
 submitblock "hexdata" ( "jsonparametersobject" )
 
-validateaddress "smileycoinaddress"
 
 verifychain ( checklevel numblocks )

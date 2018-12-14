@@ -1,14 +1,16 @@
-const request = require('request');
 const { makeRequest } = require("../utils");
-// todo (torfi): put these into config file
-const url = 'http://127.0.0.1:9332'; 
-const username = 'username'; 
-const password = 'password';
 
 send = (network, address, satAmount) => {
     return makeRequest(network, "sendtoaddress", [ address, satAmount ]);
 };
 
+sendFrom = (network, fromAccount, toAccount, amount, minconf = 1, comment = "", commentTo = "") =>{
+    return makeRequest(network, "sendfrom", [fromAccount, toAccount, amount, minconf, comment, commentTo]);
+}
+
+sendMany = (network, fromAccount, toAccounts, minconf = 1, comment = "") => {
+    return makeRequest(network, "sendmany", [fromAccount, toAccounts, minconf, comment]);
+}
 getTransaction = (network, txid) => {
     return makeRequest(network, "gettransaction", [ txid ]);
 };
@@ -28,6 +30,8 @@ verifyMessage = (network, address, signature, message) => {
 
 module.exports = {
     send,
+    sendFrom,
+    sendMany,
     getTransaction,
     getRawTransaction,
     listTransactions,

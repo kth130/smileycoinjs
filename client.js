@@ -40,6 +40,10 @@ Client.prototype.getBlockHash = function (index) {
     return blockchainApi.getBlockHash(this.network, index);
 };
 
+Client.prototype.validateAddress = function(address) {
+    return blockchainApi.validateAddress(this.network, address);
+}
+
 /**
  * Transaction API starts
  */
@@ -48,8 +52,16 @@ Client.prototype.send = function(address, satAmount) {
     return transactionApi.send(this.network, address, satAmount);
 };
 
+Client.prototype.sendFrom = function(fromAccount, toAccount, minconf, comment, commentTo) {
+    return transactionApi.send(this.network, fromAccount, toAccount, minconf, comment, commentTo);
+};
+
+Client.prototype.sendMany = function(fromAccount, toAccounts, minconf, comment) {
+    return transactionApi.send(this.network, fromAccount, toAccounts, minconf, comment);
+};
+
 Client.prototype.getTransaction = function(txid) {
-    return transactionApi.getTransaction(this.txid);
+    return transactionApi.getTransaction(this.network, txid);
 };
 
 Client.prototype.getRawTransaction = function(txid) {
