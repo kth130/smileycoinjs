@@ -1,6 +1,8 @@
 # Smileycoinjs
 
-This implementation is supposed to function as an intermediary between a client and a Smileycoin node(or any other node for that matter). It helps by making the function call for you so that you only have to provide the inputs. This makes communication with a wallet using JavaScript much easier for you. By providing the API for most operations, one could also design a web-based wallet of sorts, and include whatever information you want there.
+This package provides an API for interacting with a Smileycoin node(or supposedly any other node for that matter). This makes communication with a wallet using JavaScript much easier for you, by providing the API for most operations. 
+
+One possible use case could be to design a browser-based wallet of sorts, and include whatever information you want there.
 
 ## How to use 
 
