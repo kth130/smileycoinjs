@@ -120,7 +120,7 @@ async function sendRawTransaction(){
 
     var info = JSON.parse(result);
     if(info && !info.error) console.log("Raw transaction sent successfully - " + info.result);
-    else console.log("Raw transaction unsuccessful)
+    else console.log("Raw transaction unsuccessful");
 }
 ```
 
