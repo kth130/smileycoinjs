@@ -76,6 +76,18 @@ Client.prototype.verifyMessage = function(address, signature, message) {
     return transactionApi.verifyMessage(this.network, address, signature, message);
 };
 
+Client.prototype.createRawTransaction = function(transactions, addresses) {
+    return transactionApi.createRawTransaction(this.network, transactions, addresses);
+}
+
+Client.prototype.signRawTransaction = function(hexstring, prevtxs, privatekeys, sighashtype ) {
+    return transactionApi.signRawTransaction(this.network, hexstring, prevtxs, privatekeys, sighashtype);
+}
+
+Client.prototype.sendRawTransaction = function(hexstring, allowHighFees) {
+    return transactionApi.signRawTransaction(this.network, hexstring, allowHighFees);
+}
+
 
 
 /**

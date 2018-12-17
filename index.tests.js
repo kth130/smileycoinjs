@@ -3,7 +3,7 @@ const { Client } = require('./index');
 const smly = new Client({username: '', password: '' });
 // todo (torfi): very naive tests, quick implementation to be able to make calls to the api (in smly.js)
 // later choose a framework and rewrite tests
-const address = "";
+const address = "BEkpon3cicwBkgkM8vtZUxr19eAEQrxVB4";
 const account = "";
 const blockhash = "";
 
@@ -79,7 +79,7 @@ function getBlockHashTest() {
 
 
 function sendTest() {
-    smly.send('BSxg8zTJrdi36pLkVeQfrqagBB2oyAyPXe', 11)
+    smly.send('<address>', 11)
     .then((result) => {
         let info = JSON.parse(result);
         if (!info.error) console.log('sendTest passed, tdix: ' + info.result)
@@ -91,7 +91,19 @@ function sendTest() {
 }
 
 function getTransactionTest() {
-    smly.getTransaction('e299717de8f718961bf2dd3c286fac798b0166fe20dddf282cf42044875b2148')
+    smly.getTransaction('<txid>')
+    .then((result) => {
+        let info = JSON.parse(result);
+        if (info.result.txid) console.log('getTransactionTest passed, tdix: ' + info.result.txid)
+        else console.log('getTransactionTest failed - ' + info);
+    })
+    .catch((err) => {
+        console.log('getTransactionTest failed - error: ' + err);
+    });
+}
+
+function getRawTransactionTest() {
+    smly.getRawTransaction('<txid>')
     .then((result) => {
         let info = JSON.parse(result);
         if (info.result.txid) console.log('getTransactionTest passed, tdix: ' + info.result.txid)
@@ -194,7 +206,7 @@ function getNewAddressTest(){
         else console.log('getNewAddress failed - ' + result);        
     })
     .catch((err) => {
-        console.log('getNewAddress failed - error: ' + error);
+        console.log('getNewAddress failed - error: ' + err);
         
     });
 }
@@ -316,10 +328,66 @@ function setTransactionFeeTest(){
     });
 }
 
+async function createRawTransactionTest(){
+    let unspent;
+    try {
+        unspent = await smly.listUnspent();
+    } catch (err){
+        unspent = null;
+    }
+    unspent = JSON.parse(unspent);
+    var output = unspent.result;
+
+    var transactions = [{
+        txid: output[0].txid,
+        vout: 0
+    }];
+
+    var addresses = {};
+    addresses[output[0].address] = output[0].amount - 12;
+    addresses[address] = 10;
+    console.log(transactions, addresses);
+    
+    let result;
+    try {
+        result = await smly.createRawTransaction(transactions, addresses);
+    } catch(err){
+        console.log(err);
+    }
+
+    var info = JSON.parse(result);
+    if(info && !info.error) console.log("createrawtransaction passed - " + info.result);
+    else console.log("createrawtransaction failed - " + info.error);
+}
+
+async function signRawTransactionTest(){
+    let result;
+    try { 
+        result = await smly.signRawTransaction("0100000001980c808141dde026bf70201b361ad651f629a5fd2f2fadc53c86a5f36558f04f0000000000ffffffff0220fd34ead90200001976a9147595cd909f5ab133dbac1b5fb502052d545abf1788ac00ca9a3b000000001976a914710c620b86dd89a4ed6213b3248ddeb50ab707a988ac00000000")
+    } catch(err){
+        console.log("signrawtransaction failed - " + err);
+    }
+    console.log(result);
+    if (result && !result.error) console.log("signrawtransaction passed - " + result.result);
+    
+}
+
+async function sendRawTransactionTest(){
+    let result;
+    try {
+        result = await smly.sendRawTransaction("<hexstring>");
+    } catch (err) {
+        console.error(err);
+    }
+
+    var info = JSON.parse(result);
+    if(info && !info.error) console.log("sendrawtransaction successful - " + info.result)
+}
 
 
 
 
+/*
 /* Tests for BlockchainAPI */
 getBlockchainInfoTest();
 getInfoTest();
@@ -331,9 +399,11 @@ getBlockHashTest()
 
 
 /* Test for Transaction API */
-//sendTest();
-//getTransactionTest();
-
+sendTest();
+getTransactionTest();
+getRawTransactionTest();
+createRawTransactionTest();
+signRawTransactionTest();
 /* Tests for WalletAPI */
 getAccountTest();
 getAccountAddressTest();
@@ -348,7 +418,7 @@ listReceivedByAccountTest();
 listReceivedByAddressTest();
 listAccountsTest();
 listUnspentTest();
-dumpPrivKeyTest();
+// dumpPrivKeyTest();
 //dumpWallet,
 setTransactionFeeTest();
 
