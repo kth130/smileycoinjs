@@ -94,7 +94,7 @@ async function createRaw(){
 **Sign raw transaction**
 
 ```js
-async function signRawTransactionTest(){
+async function signRawTransaction(){
     let result;
     try { 
         result = await smly.signRawTransaction("<hexstring>")
@@ -102,7 +102,7 @@ async function signRawTransactionTest(){
         console.log("signrawtransaction failed - " + err);
     }
     var info = JSON.parse(result);
-    if (info && !info.error) console.log("signrawtransaction passed - " + info.result);
+    if (info && !info.error) console.log("signrawtransaction successful - " + info.result);
     else console.log("signrawtransaction failed");
 }
 ```
@@ -196,83 +196,43 @@ smly.getNewAddress()
 + createrawtransaction
 + signrawtransaction
 + sendrawtransaction
++ signmessage "smileycoinaddress" "message"
 
+---
 
+## TODO:
 
-### TODO
+Operations that have not been implemented:
 
-addmultisigaddress nrequired ["key",...] ( "account" )
-
-addnode "node" "add|remove|onetry"
-
-backupwallet "destination"
-
-createmultisig nrequired ["key",...]
-
-createrawtransaction [{"txid":"id","vout":n},...] {"address":amount,...}
-
-decoderawtransaction "hexstring"
-
-decodescript "hex"
-
-encryptwallet "passphrase"
-
-getaddednodeinfo dns ( "node" )
-
-getblocktemplate ( "jsonrequestobject" )
-
-getgenerate
-
-gethashespersec
-
-getnettotals
-
-getpeerinfo
-
-getrawchangeaddress
-
-getrawmempool ( verbose )
-
-getrichaddresses
-
-gettxout "txid" n ( includemempool )
-
-gettxoutsetinfo
-
-getwork ( "data" )
-
-help ( "command" )
-
-importprivkey "smileycoinprivkey" ( "label" rescan )
-
-importwallet "filename"
-
-keypoolrefill ( newsize )
-
-listaddressgroupings
-
-listlockunspent
-
-listsinceblock ( "blockhash" target-confirmations )
-
-lockunspent unlock [{"txid":"txid","vout":n},...]
-
-move "fromaccount" "toaccount" amount ( minconf "comment" )
-
-sendrawtransaction "hexstring" ( allowhighfees )
-
-setaccount "smileycoinaddress" "account"
-
-setgenerate generate ( genproclimit )
-
-signmessage "smileycoinaddress" "message"
-
-signrawtransaction "hexstring" ( [{"txid":"id","vout":n,"scriptPubKey":"hex","redeemScript":"hex"},...] ["privatekey1",...] sighashtype 
-)
-
-stop
-
-submitblock "hexdata" ( "jsonparametersobject" )
-
-
-verifychain ( checklevel numblocks )
++ addmultisigaddress nrequired ["key",...] ( "account" )
++ addnode "node" "add|remove|onetry"
++ backupwallet "destination"
++ createmultisig nrequired ["key",...]
++ decoderawtransaction "hexstring"
++ decodescript "hex"
++ encryptwallet "passphrase"
++ getaddednodeinfo dns ( "node" )
++ getblocktemplate ( "jsonrequestobject" )
++ getgenerate
++ gethashespersec
++ getnettotals
++ getpeerinfo
++ getrawchangeaddress
++ getrawmempool ( verbose )
++ getrichaddresses
++ gettxout "txid" n ( includemempool )
++ gettxoutsetinfo
++ getwork ( "data" )
++ help ( "command" )
++ importprivkey "smileycoinprivkey" ( "label" rescan )
++ importwallet "filename"
++ keypoolrefill ( newsize )
++ listaddressgroupings
++ listlockunspent
++ listsinceblock ( "blockhash" target-confirmations )
++ lockunspent unlock [{"txid":"txid","vout":n},...]
++ move "fromaccount" "toaccount" amount ( minconf "comment" )
++ setaccount "smileycoinaddress" "account"
++ setgenerate generate ( genproclimit )
++ submitblock "hexdata" ( "jsonparametersobject" )
++ verifychain ( checklevel numblocks )
