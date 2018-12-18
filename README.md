@@ -138,18 +138,6 @@ smly.getNewAddress("<account>")
     });
 ```
 
-```js
-smly.getNewAddress()
-    .then((result) => {
-        var info = JSON.parse(result);
-        if(!info.error) console.log("New address generated successfully!");
-        else console.log("Generating new address unsuccessful");
-    })
-    .catch(err => {
-        console.error(err);
-    });
-```
-
 [More usage examples can be found in the test file](index.tests.js)
 
 
