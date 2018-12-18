@@ -150,7 +150,7 @@ smly.getNewAddress()
     });
 ```
 
-
+[More usage examples can be found in the test file](index.tests.js)
 
 
 
