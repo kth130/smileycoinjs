@@ -40,6 +40,10 @@ Client.prototype.getBlockHash = function (index) {
     return blockchainApi.getBlockHash(this.network, index);
 };
 
+Client.prototype.validateAddress = function(address) {
+    return blockchainApi.validateAddress(this.network, address);
+}
+
 /**
  * Transaction API starts
  */
@@ -48,8 +52,16 @@ Client.prototype.send = function(address, satAmount) {
     return transactionApi.send(this.network, address, satAmount);
 };
 
+Client.prototype.sendFrom = function(fromAccount, toAccount, minconf, comment, commentTo) {
+    return transactionApi.send(this.network, fromAccount, toAccount, minconf, comment, commentTo);
+};
+
+Client.prototype.sendMany = function(fromAccount, toAccounts, minconf, comment) {
+    return transactionApi.send(this.network, fromAccount, toAccounts, minconf, comment);
+};
+
 Client.prototype.getTransaction = function(txid) {
-    return transactionApi.getTransaction(this.txid);
+    return transactionApi.getTransaction(this.network, txid);
 };
 
 Client.prototype.getRawTransaction = function(txid) {
@@ -63,6 +75,18 @@ Client.prototype.listTransactions = function(account, count, from) {
 Client.prototype.verifyMessage = function(address, signature, message) {
     return transactionApi.verifyMessage(this.network, address, signature, message);
 };
+
+Client.prototype.createRawTransaction = function(transactions, addresses) {
+    return transactionApi.createRawTransaction(this.network, transactions, addresses);
+}
+
+Client.prototype.signRawTransaction = function(hexstring, prevtxs, privatekeys, sighashtype ) {
+    return transactionApi.signRawTransaction(this.network, hexstring, prevtxs, privatekeys, sighashtype);
+}
+
+Client.prototype.sendRawTransaction = function(hexstring, allowHighFees) {
+    return transactionApi.signRawTransaction(this.network, hexstring, allowHighFees);
+}
 
 
 
@@ -126,6 +150,10 @@ Client.prototype.dumpPrivKey = function(address) {
 
 Client.prototype.setTransactionFee = function(amount) {
     return walletApi.setTransactionFee(this.network, amount);
+}
+
+Client.prototype.signMessage = function(address, message) {
+    return walletApi.signMessage(this.network, address, message);
 }
 
 /**

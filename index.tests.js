@@ -1,8 +1,7 @@
 const { Client } = require('./index');
 
 const smly = new Client({username: '', password: '' });
-// todo (torfi): very naive tests, quick implementation to be able to make calls to the api (in smly.js)
-// later choose a framework and rewrite tests
+
 const address = "";
 const account = "";
 const blockhash = "";
@@ -15,7 +14,7 @@ function getBlockchainInfoTest() {
         else console.log('getBlockchainInfoTest failed');
     })
     .catch((err) => {
-        console.log('getBlockchainInfoTest failed');
+        console.log('getBlockchainInfoTest failed' + err);
     });
 }
 
@@ -27,7 +26,7 @@ function getMiningInfoTest() {
         else console.log('getMiningInfo failed - ' + info);
     })
     .catch((err) => {
-        console.log('getMiningInfo failed');
+        console.log('getMiningInfo failed' + err);
     });
 }
 
@@ -79,7 +78,7 @@ function getBlockHashTest() {
 
 
 function sendTest() {
-    smly.send('BSxg8zTJrdi36pLkVeQfrqagBB2oyAyPXe', 11)
+    smly.send('<address>', 11)
     .then((result) => {
         let info = JSON.parse(result);
         if (!info.error) console.log('sendTest passed, tdix: ' + info.result)
@@ -91,7 +90,19 @@ function sendTest() {
 }
 
 function getTransactionTest() {
-    smly.getTransaction('e299717de8f718961bf2dd3c286fac798b0166fe20dddf282cf42044875b2148')
+    smly.getTransaction('<txid>')
+    .then((result) => {
+        let info = JSON.parse(result);
+        if (info.result.txid) console.log('getTransactionTest passed, tdix: ' + info.result.txid)
+        else console.log('getTransactionTest failed - ' + info);
+    })
+    .catch((err) => {
+        console.log('getTransactionTest failed - error: ' + err);
+    });
+}
+
+function getRawTransactionTest() {
+    smly.getRawTransaction('<txid>')
     .then((result) => {
         let info = JSON.parse(result);
         if (info.result.txid) console.log('getTransactionTest passed, tdix: ' + info.result.txid)
@@ -194,7 +205,7 @@ function getNewAddressTest(){
         else console.log('getNewAddress failed - ' + result);        
     })
     .catch((err) => {
-        console.log('getNewAddress failed - error: ' + error);
+        console.log('getNewAddress failed - error: ' + err);
         
     });
 }
@@ -316,8 +327,73 @@ function setTransactionFeeTest(){
     });
 }
 
+async function createRawTransactionTest(){
+    let unspent;
+    try {
+        unspent = await smly.listUnspent();
+    } catch (err){
+        unspent = null;
+    }
+    unspent = JSON.parse(unspent);
+    var output = unspent.result;
 
+    var transactions = [{
+        txid: output[0].txid,
+        vout: 0
+    }];
 
+    var addresses = {};
+    addresses[output[0].address] = output[0].amount - 12;
+    addresses[address] = 10;
+    console.log(transactions, addresses);
+    
+    let result;
+    try {
+        result = await smly.createRawTransaction(transactions, addresses);
+    } catch(err){
+        console.log(err);
+    }
+
+    var info = JSON.parse(result);
+    if(info && !info.error) console.log("createrawtransaction passed - " + info.result);
+    else console.log("createrawtransaction failed - " + info.error);
+}
+
+async function signRawTransactionTest(){
+    let result;
+    try { 
+        result = await smly.signRawTransaction("<hexstring>")
+    } catch(err){
+        console.log("signrawtransaction failed - " + err);
+    }
+    console.log(result);
+    if (result && !result.error) console.log("signrawtransaction passed - " + result.result);
+    
+}
+
+async function sendRawTransactionTest(){
+    let result;
+    try {
+        result = await smly.sendRawTransaction("<hexstring>");
+    } catch (err) {
+        console.error(err);
+    }
+
+    var info = JSON.parse(result);
+    if(info && !info.error) console.log("sendrawtransaction successful - " + JSON.stringify(info.result));
+}
+
+function signMessageTest() {
+    smly.signMessage("<address>", "<message>")
+    .then((result) => {
+        var info = JSON.parse(result);
+        if(info && !info.error) console.log("signmessage passed");
+        else console.log("signmessage failed");
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
 
 
 /* Tests for BlockchainAPI */
@@ -331,13 +407,17 @@ getBlockHashTest()
 
 
 /* Test for Transaction API */
-//sendTest();
-//getTransactionTest();
+sendTest();
+getTransactionTest();
+getRawTransactionTest();
+createRawTransactionTest();
+signRawTransactionTest();
+sendRawTransactionTest();
 
 /* Tests for WalletAPI */
 getAccountTest();
 getAccountAddressTest();
-//getNewAddressTest();
+getNewAddressTest();
 getBalanceTest(),
 getUnconfirmedBalanceTest();
 getWalletInfoTest();
@@ -349,8 +429,10 @@ listReceivedByAddressTest();
 listAccountsTest();
 listUnspentTest();
 dumpPrivKeyTest();
-//dumpWallet,
+dumpWalletTest(),
 setTransactionFeeTest();
+signMessageTest();
 
 /* Tests for NetworkAPI */
+
 

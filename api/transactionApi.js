@@ -1,14 +1,16 @@
-const request = require('request');
 const { makeRequest } = require("../utils");
-// todo (torfi): put these into config file
-const url = 'http://127.0.0.1:9332'; 
-const username = 'username'; 
-const password = 'password';
 
 send = (network, address, satAmount) => {
     return makeRequest(network, "sendtoaddress", [ address, satAmount ]);
 };
 
+sendFrom = (network, fromAccount, toAccount, amount, minconf = 1, comment = "", commentTo = "") =>{
+    return makeRequest(network, "sendfrom", [fromAccount, toAccount, amount, minconf, comment, commentTo]);
+}
+
+sendMany = (network, fromAccount, toAccounts, minconf = 1, comment = "") => {
+    return makeRequest(network, "sendmany", [fromAccount, toAccounts, minconf, comment]);
+}
 getTransaction = (network, txid) => {
     return makeRequest(network, "gettransaction", [ txid ]);
 };
@@ -25,11 +27,28 @@ verifyMessage = (network, address, signature, message) => {
     return makeRequest(network, "verifymessage", [ address, signature, message ]);
 };
 
+createRawTransaction = (network, transactions, addresses) => {
+    return makeRequest(network, "createrawtransaction", [transactions, addresses]);
+}
+
+signRawTransaction = (network, hexstring) => {
+    return makeRequest(network, "signrawtransaction", [hexstring]);
+}
+
+sendRawTransaction = (network, hexstring, allowHighFees = false) => {
+    return makeRequest(network, "sendrawtransaction", [hexstring, allowHighFees]);
+}
+
 
 module.exports = {
     send,
+    sendFrom,
+    sendMany,
     getTransaction,
     getRawTransaction,
     listTransactions,
-    verifyMessage
+    verifyMessage,
+    createRawTransaction, 
+    signRawTransaction,
+    sendRawTransaction
 }
