@@ -85,7 +85,7 @@ Client.prototype.signRawTransaction = function(hexstring, prevtxs, privatekeys, 
 }
 
 Client.prototype.sendRawTransaction = function(hexstring, allowHighFees) {
-    return transactionApi.signRawTransaction(this.network, hexstring, allowHighFees);
+    return transactionApi.sendRawTransaction(this.network, hexstring, allowHighFees);
 }
 
 
