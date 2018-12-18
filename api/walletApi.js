@@ -64,6 +64,10 @@ setTransactionFee = (network, amount) => {
     return makeRequest(network, "settxfee", [ amount ]);
 };
 
+signMessage = (network, address, message) => {
+    return makeRequest(network, "signmessage", [address, message]);
+}
+
 
 
 module.exports = {
@@ -83,4 +87,5 @@ module.exports = {
     dumpPrivKey,
     dumpWallet,
     setTransactionFee,
+    signMessage
 }

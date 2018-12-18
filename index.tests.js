@@ -1,9 +1,8 @@
 const { Client } = require('./index');
 
 const smly = new Client({username: '', password: '' });
-// todo (torfi): very naive tests, quick implementation to be able to make calls to the api (in smly.js)
-// later choose a framework and rewrite tests
-const address = "BEkpon3cicwBkgkM8vtZUxr19eAEQrxVB4";
+
+const address = "";
 const account = "";
 const blockhash = "";
 
@@ -15,7 +14,7 @@ function getBlockchainInfoTest() {
         else console.log('getBlockchainInfoTest failed');
     })
     .catch((err) => {
-        console.log('getBlockchainInfoTest failed');
+        console.log('getBlockchainInfoTest failed' + err);
     });
 }
 
@@ -27,7 +26,7 @@ function getMiningInfoTest() {
         else console.log('getMiningInfo failed - ' + info);
     })
     .catch((err) => {
-        console.log('getMiningInfo failed');
+        console.log('getMiningInfo failed' + err);
     });
 }
 
@@ -363,7 +362,7 @@ async function createRawTransactionTest(){
 async function signRawTransactionTest(){
     let result;
     try { 
-        result = await smly.signRawTransaction("0100000001980c808141dde026bf70201b361ad651f629a5fd2f2fadc53c86a5f36558f04f0000000000ffffffff0220fd34ead90200001976a9147595cd909f5ab133dbac1b5fb502052d545abf1788ac00ca9a3b000000001976a914710c620b86dd89a4ed6213b3248ddeb50ab707a988ac00000000")
+        result = await smly.signRawTransaction("<hexstring>")
     } catch(err){
         console.log("signrawtransaction failed - " + err);
     }
@@ -381,13 +380,22 @@ async function sendRawTransactionTest(){
     }
 
     var info = JSON.parse(result);
-    if(info && !info.error) console.log("sendrawtransaction successful - " + info.result)
+    if(info && !info.error) console.log("sendrawtransaction successful - " + JSON.stringify(info.result));
+}
+
+function signMessageTest() {
+    smly.signMessage("<address>", "<message>")
+    .then((result) => {
+        var info = JSON.parse(result);
+        if(info && !info.error) console.log("signmessage passed");
+        else console.log("signmessage failed");
+    })
+    .catch(err => {
+        console.error(err);
+    });
 }
 
 
-
-
-/*
 /* Tests for BlockchainAPI */
 getBlockchainInfoTest();
 getInfoTest();
@@ -404,10 +412,12 @@ getTransactionTest();
 getRawTransactionTest();
 createRawTransactionTest();
 signRawTransactionTest();
+sendRawTransactionTest();
+
 /* Tests for WalletAPI */
 getAccountTest();
 getAccountAddressTest();
-//getNewAddressTest();
+getNewAddressTest();
 getBalanceTest(),
 getUnconfirmedBalanceTest();
 getWalletInfoTest();
@@ -418,9 +428,11 @@ listReceivedByAccountTest();
 listReceivedByAddressTest();
 listAccountsTest();
 listUnspentTest();
-// dumpPrivKeyTest();
-//dumpWallet,
+dumpPrivKeyTest();
+dumpWalletTest(),
 setTransactionFeeTest();
+signMessageTest();
 
 /* Tests for NetworkAPI */
+
 

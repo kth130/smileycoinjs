@@ -152,6 +152,10 @@ Client.prototype.setTransactionFee = function(amount) {
     return walletApi.setTransactionFee(this.network, amount);
 }
 
+Client.prototype.signMessage = function(address, message) {
+    return walletApi.signMessage(this.network, address, message);
+}
+
 /**
  * Network API starts
  */
